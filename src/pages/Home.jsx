@@ -1,36 +1,25 @@
 import { useState } from 'react';
 import { searchForShows, searchForPeople } from '../api/tvmaze';
+import SearchForm from '../components/SearchForm';
 
 const Home = () => {
-  const [searchStr, setSearchStr] = useState('');
   const [apiData, setApiData] = useState(null);
   const [apiDataError, setApiDataError] = useState(null);
-  const [searchOption, setsearchOption] = useState('shows'); //Either shows or actors
 
-  console.log(searchOption);
-  const OPTION = searchOption;
-
-  const onSearchInputChange = event => {
-    setSearchStr(event.target.value);
-  };
-
-  const onRadioChange = event => {
-    setsearchOption(event.target.value);
-  };
-
-  const onSearch = async event => {
-    event.preventDefault();
+  // const onSearch = async({ q, s });
+  // or either directly  pass arguments or pass as objects
+  const onSearch = async (searchStr, searchOption) => {
     // https://api.tvmaze.com/search/shows?q=marvel
 
     try {
       setApiDataError(null);
-      if (OPTION === 'shows') {
-        const result = await searchForShows(searchStr);
-        setApiData(result);
+      let result;
+      if (searchOption === 'shows') {
+        result = await searchForShows(searchStr);
       } else {
-        const result = await searchForPeople(searchStr);
-        setApiData(result);
+        result = await searchForPeople(searchStr);
       }
+      setApiData(result);
     } catch (error) {
       setApiDataError(error);
     }
@@ -54,32 +43,8 @@ const Home = () => {
 
   return (
     <div>
-      <form onSubmit={onSearch}>
-        <label>
-          Shows
-          <input
-            type="radio"
-            name="search-options"
-            value="shows"
-            onChange={onRadioChange}
-            checked={searchOption === 'shows'}
-          />
-        </label>
+      <SearchForm onSearch={onSearch} />
 
-        <label>
-          Actors
-          <input
-            type="radio"
-            name="search-options"
-            value="people"
-            onChange={onRadioChange}
-            checked={searchOption === 'people'}
-          />
-        </label>
-
-        <input type="text" value={searchStr} onChange={onSearchInputChange} />
-        <button type="submit">Search</button>
-      </form>
       <div>{renderApiData()}</div>
     </div>
   );
