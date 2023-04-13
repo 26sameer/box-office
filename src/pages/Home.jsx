@@ -4,6 +4,29 @@ import SearchForm from '../components/SearchForm';
 import ShowsGrid from '../components/shows/ShowsGrid';
 import ActorsGrid from '../components/actors/ActorsGrid';
 
+// Component Life Cycle
+// MOUNT
+// RE-RENDER
+// UNMOUNT
+// Component Life Cycle
+// 1.MOUNT
+// 2.RE-RENDER
+// 2.5) Logic before next re render
+// 3.UNMOUNT
+
+// useEffect runs atleast once
+// useEffect(() => {
+//   console.log('searchOption Changes', searchOption);
+// Logic inside useEffect is rendered only once when component mounts
+// Also returns a cleanup function
+// return () => {
+// console.log('Before next render', searchOption);
+// Return function is executed for each change in argument passed in array of dependencies
+//   };
+// }, [searchOption]);
+
+// console.log('Comp Re-renders');
+
 const Home = () => {
   const [apiData, setApiData] = useState(null);
   const [apiDataError, setApiDataError] = useState(null);

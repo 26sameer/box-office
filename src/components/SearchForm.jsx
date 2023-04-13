@@ -4,6 +4,9 @@ const SearchForm = ({ onSearch }) => {
   const [searchStr, setSearchStr] = useState('');
   const [searchOption, setsearchOption] = useState('shows'); //Either shows or actors
 
+  // Array of dependencies are present in useEffect --> []
+  // If one of argument passed in Array of dependencies value changes useEffect will re-run
+
   const onSearchInputChange = event => {
     setSearchStr(event.target.value);
   };
