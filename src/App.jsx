@@ -4,20 +4,25 @@ import Starred from './pages/Starred';
 import NoMatch from './pages/NoMatch';
 import MainLayout from './components/MainLayout';
 import Show from './pages/Show';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+
+const queryClient = new QueryClient();
 
 function App() {
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route element={<MainLayout />}>
-          <Route path="/" element={<Home />}></Route>
-          <Route path="starred" element={<Starred />}></Route>
-          <Route path="/show/:showId" element={<Show />}></Route>
-        </Route>
+    <QueryClientProvider client={queryClient}>
+      <BrowserRouter>
+        <Routes>
+          <Route element={<MainLayout />}>
+            <Route path="/" element={<Home />}></Route>
+            <Route path="starred" element={<Starred />}></Route>
+            <Route path="/show/:showId" element={<Show />}></Route>
+          </Route>
 
-        <Route path="*" element={<NoMatch />} />
-      </Routes>
-    </BrowserRouter>
+          <Route path="*" element={<NoMatch />} />
+        </Routes>
+      </BrowserRouter>
+    </QueryClientProvider>
   );
 }
 
