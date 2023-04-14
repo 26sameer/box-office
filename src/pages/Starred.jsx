@@ -1,5 +1,11 @@
+import AppTitle from '../components/AppTitle';
 const Starred = () => {
-  return <div>Starred</div>;
+  return (
+    <div>
+      <AppTitle />
+      <div>Starred</div>
+    </div>
+  );
 };
 
 export default Starred;
