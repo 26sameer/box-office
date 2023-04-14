@@ -17,7 +17,8 @@ const SearchForm = ({ onSearch }) => {
 
   const onSubmit = event => {
     event.preventDefault();
-    onSearch(searchStr, searchOption);
+    onSearch({ searchStr, searchOption });
+    // Always destructure objects PLS REMEMBER IT!
 
     // const options = {
     //   q: searchStr,

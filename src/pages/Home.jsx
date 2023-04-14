@@ -1,53 +1,30 @@
 import { useState } from 'react';
+import { useQuery } from '@tanstack/react-query';
 import { searchForShows, searchForPeople } from '../api/tvmaze';
 import SearchForm from '../components/SearchForm';
 import ShowsGrid from '../components/shows/ShowsGrid';
 import ActorsGrid from '../components/actors/ActorsGrid';
 
-// Component Life Cycle
-// MOUNT
-// RE-RENDER
-// UNMOUNT
-// Component Life Cycle
-// 1.MOUNT
-// 2.RE-RENDER
-// 2.5) Logic before next re render
-// 3.UNMOUNT
-
-// useEffect runs atleast once
-// useEffect(() => {
-//   console.log('searchOption Changes', searchOption);
-// Logic inside useEffect is rendered only once when component mounts
-// Also returns a cleanup function
-// return () => {
-// console.log('Before next render', searchOption);
-// Return function is executed for each change in argument passed in array of dependencies
-//   };
-// }, [searchOption]);
-
-// console.log('Comp Re-renders');
-
 const Home = () => {
-  const [apiData, setApiData] = useState(null);
-  const [apiDataError, setApiDataError] = useState(null);
+  const [filter, setFilter] = useState(null);
 
-  // const onSearch = async({ q, s });
-  // or either directly  pass arguments or pass as objects
-  const onSearch = async (searchStr, searchOption) => {
+  const { data: apiData, error: apiDataError } = useQuery({
+    queryKey: ['search', filter],
+    queryFn: () =>
+      filter.searchOption === 'shows'
+        ? searchForShows(filter.searchStr)
+        : searchForPeople(filter.searchStr),
+    // ⬇️ disabled as long as the filter is empty
+    // Whenever search is clicked, filter changes hence queryKey changes and react query will fetch data again
+    enabled: !!filter,
+    // If set to true, the query will refetch on window focus if the data is stale. If set to false,
+    //⬇️ the query will not refetch on window focus.
+    refetchOnWindowFocus: false,
+  });
+
+  const onSearch = async ({ searchStr, searchOption }) => {
     // https://api.tvmaze.com/search/shows?q=marvel
-
-    try {
-      setApiDataError(null);
-      let result;
-      if (searchOption === 'shows') {
-        result = await searchForShows(searchStr);
-      } else {
-        result = await searchForPeople(searchStr);
-      }
-      setApiData(result);
-    } catch (error) {
-      setApiDataError(error);
-    }
+    setFilter({ searchStr, searchOption });
   };
 
   const renderApiData = () => {
