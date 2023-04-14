@@ -1,6 +1,10 @@
 import { useParams } from 'react-router-dom';
 import { getShowById } from '../api/tvmaze';
 import { useQuery } from '@tanstack/react-query';
+import ShowMainData from '../components/shows/ShowMainData';
+import Details from '../components/shows/Details';
+import Season from '../components/shows/Season';
+import Cast from '../components/shows/Cast';
 
 const Show = () => {
   const { showId } = useParams();
@@ -9,6 +13,7 @@ const Show = () => {
   const { data: showData, error: showError } = useQuery({
     queryKey: ['show', showId],
     queryFn: () => getShowById(showId),
+    refetchOnWindowFocus: false,
   });
 
   if (showError) {
@@ -16,7 +21,38 @@ const Show = () => {
   }
 
   if (showData) {
-    return <div>Data: {showData.name}</div>;
+    return (
+      <div>
+        <div>
+          <ShowMainData
+            image={showData.image}
+            name={showData.name}
+            rating={showData.rating}
+            summary={showData.summary}
+            genres={showData.genres}
+          />
+        </div>
+
+        <div>
+          <h2>Details</h2>
+          <Details
+            status={showData.status}
+            premiered={showData.premiered}
+            webChannel={showData.webChannel}
+            network={showData.network}
+          />
+        </div>
+        <div>
+          <h2>Seasons</h2>
+          <Season seasons={showData._embedded.seasons} />
+        </div>
+
+        <div>
+          <h2>Cast</h2>
+          <Cast cast={showData._embedded.cast} />
+        </div>
+      </div>
+    );
   }
   // We need to run logic only once so we specify an empty array of dependencies in useEffect()
   return <div>Data Loading</div>;
