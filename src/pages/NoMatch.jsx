@@ -1,5 +1,11 @@
+import { TextCenter } from '../components/common/TextCenter';
+
 const NoMatch = () => {
-  return <div>404 NOT FOUND!</div>;
+  return (
+    <TextCenter>
+      <h1>404 NOT FOUND!</h1>
+    </TextCenter>
+  );
 };
 
 export default NoMatch;

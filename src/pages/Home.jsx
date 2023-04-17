@@ -5,6 +5,8 @@ import SearchForm from '../components/SearchForm';
 import ShowsGrid from '../components/shows/ShowsGrid';
 import ActorsGrid from '../components/actors/ActorsGrid';
 import AppTitle from '../components/AppTitle';
+import Navs from '../components/Navs';
+import { TextCenter } from '../components/common/TextCenter';
 
 const Home = () => {
   const [filter, setFilter] = useState(null);
@@ -30,11 +32,11 @@ const Home = () => {
 
   const renderApiData = () => {
     if (apiDataError) {
-      return <div>Error Occurred: {apiDataError.message}</div>;
+      return <TextCenter>Error Occurred: {apiDataError.message}</TextCenter>;
     }
 
     if (apiData?.length === 0) {
-      return <div>No Results</div>;
+      return <TextCenter>No Results</TextCenter>;
     }
 
     if (apiData) {
@@ -51,6 +53,7 @@ const Home = () => {
   return (
     <div>
       <AppTitle />
+      <Navs />
       <SearchForm onSearch={onSearch} />
 
       <div>{renderApiData()}</div>
