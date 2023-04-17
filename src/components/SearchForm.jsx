@@ -1,7 +1,8 @@
 import { useState } from 'react';
+import { useSearchState } from '../lib/useSearchState';
 
 const SearchForm = ({ onSearch }) => {
-  const [searchStr, setSearchStr] = useState('');
+  const [searchStr, setSearchStr] = useSearchState('');
   const [searchOption, setsearchOption] = useState('shows'); //Either shows or actors
 
   // Array of dependencies are present in useEffect --> []
