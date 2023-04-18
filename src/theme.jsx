@@ -2,10 +2,9 @@ import { ThemeProvider, createGlobalStyle } from 'styled-components';
 
 const theme = {
   fontFamily: 'Poppins, sans-serif',
-  // fontFamilyMain: 'Cinzel Decorative, sans-serif',
   fontFamilyMain: 'DynaPuff, sans-serif',
   mainColors: {
-    blue: '#2400ff',
+    blue: '#8c00ff',
     gray: '#c6c6c6',
     dark: '#353535',
   },

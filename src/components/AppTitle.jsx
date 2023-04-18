@@ -22,6 +22,7 @@ const TitleWrapper = styled.div`
     font-family: ${({ theme }) => theme.fontFamily};
     letter-spacing: 10px;
     text-transform: uppercase;
+    font-weight: 700;
     margin: 0 0 10px;
   }
   p {
